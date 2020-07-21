@@ -1,0 +1,46 @@
+{
+    "name": "nepada/phpstan-message-bus",
+    "type": "phpstan-extension",
+    "license": "BSD-3-Clause",
+    "description": "PHPStan extension for nepada/message-bus.",
+    "keywords": ["phpstan", "message bus", "nepada"],
+    "support": {
+        "email": "petr@pada.cz",
+        "issues": "https://github.com/nepada/phpstan-message-bus/issues"
+    },
+    "authors": [
+        {
+            "name": "Petr Morávek",
+            "email": "petr@pada.cz"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "nepada/message-bus": "^2.0@dev",
+        "nette/robot-loader": "^3.0@dev",
+        "phpstan/phpstan": "^0.12.26",
+        "pepakriz/phpstan-exception-rules": "^0.10.1 || ^0.11.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan-strict-rules": "^0.12.2",
+        "spaze/phpstan-disallowed-calls": "^0.12.1",
+        "php-parallel-lint/php-parallel-lint": "^1.2.0",
+        "nepada/coding-standard": "^7.2",
+        "nette/utils": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nepada\\PHPStan\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NepadaTests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    }
+}

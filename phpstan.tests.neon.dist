@@ -1,0 +1,30 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - tests/PHPStan/disallowedCalls.neon
+    - vendor/pepakriz/phpstan-exception-rules/extension.neon
+    - extension.neon
+
+parameters:
+    level: max
+    paths:
+        - tests
+
+    commandHandlerDirectories:
+        - tests
+
+    fileExtensions:
+        - php
+        - phpt
+
+    excludes_analyse:
+        - tests/temp/*
+
+    ignoreErrors:
+        - # intended
+            path: tests/Fixtures/InvalidTestService.php
+            message: "#^Missing @throws NepadaTests\\\\Fixtures\\\\FailedToPlaceOrderException annotation$#"
+            count: 1
+        - # intended
+            path: tests/Fixtures/InvalidTestService.php
+            message: "#^Missing @throws NepadaTests\\\\Fixtures\\\\FailedToRejectOrderException annotation$#"
+            count: 1

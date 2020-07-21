@@ -1,0 +1,15 @@
+parametersSchema:
+    commandHandlerDirectories: listOf(string())
+
+services:
+    - Nepada\MessageBus\StaticAnalysis\MessageTypeExtractor
+    - Nepada\PHPStan\MessageBus\CommandTypeExtractor
+    -
+        type: Nepada\PHPStan\MessageBus\CommandHandlerResolver
+        arguments:
+            scanDirectories: %commandHandlerDirectories%
+
+    -
+        type: Nepada\PHPStan\MessageBus\CommandBusDynamicMethodThrowTypeExtension
+        tags:
+            - exceptionRules.dynamicMethodThrowTypeExtension

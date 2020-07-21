@@ -1,0 +1,13 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/pepakriz/phpstan-exception-rules/extension.neon
+    - tests/PHPStan/disallowedCalls.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+
+    exceptionRules:
+        uncheckedExceptions:
+            - LogicException
