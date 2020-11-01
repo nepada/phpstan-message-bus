@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace Nepada\PHPStan\MessageBus;
 
+use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Type\TypeWithClassName;
-use PhpParser\Node\Expr\MethodCall;
 
 class CommandTypeExtractor
 {

@@ -5,16 +5,16 @@ namespace Nepada\PHPStan\MessageBus;
 
 use Nepada\MessageBus\Commands\Command;
 use Nepada\MessageBus\Commands\CommandBus;
+use Pepakriz\PHPStanExceptionRules\DynamicMethodThrowTypeExtension;
+use Pepakriz\PHPStanExceptionRules\UnsupportedClassException;
+use Pepakriz\PHPStanExceptionRules\UnsupportedFunctionException;
+use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Broker\Broker;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\VoidType;
-use Pepakriz\PHPStanExceptionRules\DynamicMethodThrowTypeExtension;
-use Pepakriz\PHPStanExceptionRules\UnsupportedClassException;
-use Pepakriz\PHPStanExceptionRules\UnsupportedFunctionException;
-use PhpParser\Node\Expr\MethodCall;
 
 class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTypeExtension
 {
