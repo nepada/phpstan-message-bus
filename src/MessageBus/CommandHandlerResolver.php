@@ -61,7 +61,7 @@ class CommandHandlerResolver
         }
 
         $this->commandTypeByHandlerType = [];
-        /** @phpstan-var class-string $class */
+        /** @var class-string $class */
         foreach ($this->getAllClasses() as $class) {
             if (! is_a($class, CommandHandler::class, true)) {
                 continue;
