@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Nepada\PHPStan\MessageBus;
 
 use PhpParser\Node\Expr\MethodCall;
+use PhpParser\Node\VariadicPlaceholder;
 use PHPStan\Analyser\Scope;
 use PHPStan\Type\TypeWithClassName;
 
@@ -16,7 +17,12 @@ class CommandTypeExtractor
             return null;
         }
 
-        $commandType = $scope->getType($methodCall->args[0]->value);
+        $commandArgument = $methodCall->args[0];
+        if ($commandArgument instanceof VariadicPlaceholder) {
+            return null;
+        }
+
+        $commandType = $scope->getType($commandArgument->value);
         if (! $commandType instanceof TypeWithClassName) {
             return null;
         }
