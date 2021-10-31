@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4.0",
+        "php": ">=7.4.0 <8.2",
         "nepada/message-bus": "^2.0@dev",
         "nette/robot-loader": "^3.3.1@dev || ~3.2.4@dev || ~3.1.2@dev",
         "phpstan/phpstan": "^0.12.54",
