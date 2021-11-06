@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace NepadaTests\Fixtures;
+namespace NepadaTests\PHPStan\MessageBus\Fixtures;
 
 use Nepada\MessageBus\Commands\CommandBus;
 
@@ -10,9 +10,12 @@ final class TestService
 
     private CommandBus $commandBus;
 
-    public function __construct(CommandBus $commandBus)
+    private DummyCommandBus $dummyCommandBus;
+
+    public function __construct(CommandBus $commandBus, DummyCommandBus $dummyCommandBus)
     {
         $this->commandBus = $commandBus;
+        $this->dummyCommandBus = $dummyCommandBus;
     }
 
     public function placeOrder(): void
@@ -21,7 +24,9 @@ final class TestService
             $command = new PlaceOrderCommand();
             $this->commandBus->handle($command);
         } catch (FailedToPlaceOrderException $exception) {
-            // noop
+            // ok
+        } catch (NotImplementedException $exception) {
+            // error
         }
     }
 
@@ -29,29 +34,17 @@ final class TestService
     {
         try {
             $command = new RejectOrderCommand();
-            $this->commandBus->handle($command);
+            $this->dummyCommandBus->handle($command);
         } catch (FailedToRejectOrderException $exception) {
-            // noop
+            // ok
+        } catch (NotImplementedException $exception) {
+            // ok
+        } catch (\Throwable $exception) {
+            // error
         }
     }
 
     public function handleOrderCommand(OrderCommand $command): void
-    {
-        try {
-            $this->commandBus->handle($command);
-        } catch (FailedToPlaceOrderException $exception) {
-            // noop
-        } catch (FailedToRejectOrderException $exception) {
-            // noop
-        }
-    }
-
-    /**
-     * @param OrderCommand $command
-     * @throws FailedToPlaceOrderException
-     * @throws FailedToRejectOrderException
-     */
-    public function handleOrderCommandWithoutErrorHandling(OrderCommand $command): void
     {
         $this->commandBus->handle($command);
     }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace NepadaTests\Fixtures;
+namespace NepadaTests\PHPStan\MessageBus\Fixtures;
 
 use Nepada\MessageBus\Commands\CommandHandler;
 

@@ -1,0 +1,12 @@
+parameters:
+    level: max
+
+    exceptions:
+        implicitThrows: false
+        check:
+            missingCheckedExceptionInThrows: true
+        uncheckedExceptionClasses:
+            - LogicException
+
+    commandHandlerDirectories:
+        - tests

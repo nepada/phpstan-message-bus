@@ -1,32 +1,31 @@
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
     - vendor/spaze/phpstan-disallowed-calls/extension.neon
     - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
     - tests/PHPStan/disallowedCalls.neon
-    - vendor/pepakriz/phpstan-exception-rules/extension.neon
-    - extension.neon
 
 parameters:
     level: max
     paths:
         - tests
 
-    commandHandlerDirectories:
-        - tests
-
     fileExtensions:
         - php
         - phpt
 
+    exceptions:
+        implicitThrows: false
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+        uncheckedExceptionClasses:
+            - LogicException
+
     excludes_analyse:
         - tests/temp/*
+        - tests/MessageBus/Fixtures/*
 
     ignoreErrors:
-        - # intended
-            path: tests/Fixtures/InvalidTestService.php
-            message: "#^Missing @throws NepadaTests\\\\Fixtures\\\\FailedToPlaceOrderException annotation$#"
-            count: 1
-        - # intended
-            path: tests/Fixtures/InvalidTestService.php
-            message: "#^Missing @throws NepadaTests\\\\Fixtures\\\\FailedToRejectOrderException annotation$#"
-            count: 1
+        - '~Creating new .* is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.~'

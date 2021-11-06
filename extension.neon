@@ -12,4 +12,4 @@ services:
     -
         type: Nepada\PHPStan\MessageBus\CommandBusDynamicMethodThrowTypeExtension
         tags:
-            - exceptionRules.dynamicMethodThrowTypeExtension
+            - phpstan.dynamicMethodThrowTypeExtension

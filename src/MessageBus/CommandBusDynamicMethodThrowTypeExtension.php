@@ -5,13 +5,11 @@ namespace Nepada\PHPStan\MessageBus;
 
 use Nepada\MessageBus\Commands\Command;
 use Nepada\MessageBus\Commands\CommandBus;
-use Pepakriz\PHPStanExceptionRules\DynamicMethodThrowTypeExtension;
-use Pepakriz\PHPStanExceptionRules\UnsupportedClassException;
-use Pepakriz\PHPStanExceptionRules\UnsupportedFunctionException;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
-use PHPStan\Broker\Broker;
 use PHPStan\Reflection\MethodReflection;
+use PHPStan\Reflection\ReflectionProvider;
+use PHPStan\Type\DynamicMethodThrowTypeExtension;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\VoidType;
@@ -23,44 +21,73 @@ class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTyp
 
     private CommandHandlerResolver $commandHandlerResolver;
 
-    private Broker $broker;
+    private ReflectionProvider $reflectionProvider;
 
-    public function __construct(CommandTypeExtractor $commandTypeExtractor, CommandHandlerResolver $commandHandlerResolver, Broker $broker)
+    public function __construct(CommandTypeExtractor $commandTypeExtractor, CommandHandlerResolver $commandHandlerResolver, ReflectionProvider $reflectionProvider)
     {
         $this->commandTypeExtractor = $commandTypeExtractor;
         $this->commandHandlerResolver = $commandHandlerResolver;
-        $this->broker = $broker;
+        $this->reflectionProvider = $reflectionProvider;
     }
 
-    public function getThrowTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): Type
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         if (! is_a($methodReflection->getDeclaringClass()->getName(), CommandBus::class, true)) {
-            throw new UnsupportedClassException();
+            return false;
         }
 
-        if ($methodReflection->getName() !== 'handle') {
-            throw new UnsupportedFunctionException();
+        return $methodReflection->getName() === 'handle';
+    }
+
+    public function getThrowTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
+    {
+        $throwTypes = [];
+
+        $commandBusThrowType = $methodReflection->getThrowType();
+        if ($commandBusThrowType !== null && ! $commandBusThrowType instanceof VoidType) {
+            $throwTypes[] = $commandBusThrowType;
         }
 
         $commandType = $this->commandTypeExtractor->extractCommandType($methodCall, $scope);
-
-        if ($commandType === null || $commandType === Command::class) {
-            return $this->getThrowTypeFromMethodReflection($methodReflection);
+        if ($commandType !== null && $commandType !== Command::class) {
+            $throwTypes = array_merge(
+                $throwTypes,
+                $this->getHandlerThrowTypes($commandType, $scope),
+            );
         }
 
-        $types = [];
-        foreach ($this->commandHandlerResolver->getHandlerClasses($commandType) as $handlerType) {
-            $handler = $this->broker->getClass($handlerType);
-            $handleMethod = $handler->getMethod('__invoke', $scope);
-            $types[] = $this->getThrowTypeFromMethodReflection($handleMethod);
+        if (count($throwTypes) === 0) {
+            return null;
         }
 
-        return TypeCombinator::union(...$types);
+        return TypeCombinator::union(...$throwTypes);
     }
 
-    private function getThrowTypeFromMethodReflection(MethodReflection $methodReflection): Type
+    /**
+     * @param string $commandType
+     * @param Scope $scope
+     * @return Type[]
+     */
+    private function getHandlerThrowTypes(string $commandType, Scope $scope): array
     {
-        return $methodReflection->getThrowType() ?? new VoidType();
+        $throwTypes = [];
+
+        foreach ($this->commandHandlerResolver->getHandlerClasses($commandType) as $handlerType) {
+            if (! $this->reflectionProvider->hasClass($handlerType)) {
+                continue;
+            }
+            $handlerReflection = $this->reflectionProvider->getClass($handlerType);
+            if (! $handlerReflection->hasMethod('__invoke')) {
+                continue;
+            }
+            $handlerThrowType = $handlerReflection->getMethod('__invoke', $scope)->getThrowType();
+            if ($handlerThrowType === null || $handlerThrowType instanceof VoidType) {
+                continue;
+            }
+            $throwTypes[] = $handlerThrowType;
+        }
+
+        return $throwTypes;
     }
 
 }
