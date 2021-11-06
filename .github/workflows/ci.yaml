@@ -53,3 +53,24 @@ jobs:
         run: composer update --no-interaction --no-progress --prefer-dist --prefer-stable
       - name: Check Code Style
         run: vendor/bin/phpcs
+
+  code_coverage:
+    runs-on: ubuntu-latest
+    needs: [ tests ]
+    continue-on-error: true
+    name: Code Coverage
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          coverage: xdebug
+      - run: composer global require php-coveralls/php-coveralls
+      - name: Build
+        run: composer update --no-interaction --no-progress --prefer-dist --prefer-stable
+      - name: Calculate coverage
+        run: vendor/bin/phpunit -c tests/phpunit.xml --coverage-clover=coverage.xml --whitelist=src tests
+      - name: Upload Coverage Report
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: php-coveralls --verbose --config tests/coveralls.yml

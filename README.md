@@ -1,8 +1,8 @@
 PHPStan Message Bus extension
 =============================
 
-
 [![Build Status](https://github.com/nepada/phpstan-message-bus/workflows/CI/badge.svg)](https://github.com/nepada/phpstan-message-bus/actions?query=workflow%3ACI+branch%3Amaster)
+[![Coverage Status](https://coveralls.io/repos/github/nepada/phpstan-message-bus/badge.svg?branch=master)](https://coveralls.io/github/nepada/phpstan-message-bus?branch=master)
 [![Downloads this Month](https://img.shields.io/packagist/dm/nepada/phpstan-message-bus.svg)](https://packagist.org/packages/nepada/phpstan-message-bus)
 [![Latest stable](https://img.shields.io/packagist/v/nepada/phpstan-message-bus.svg)](https://packagist.org/packages/nepada/phpstan-message-bus)
 
