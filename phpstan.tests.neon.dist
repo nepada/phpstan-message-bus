@@ -23,7 +23,7 @@ parameters:
         uncheckedExceptionClasses:
             - LogicException
 
-    excludes_analyse:
+    excludePaths:
         - tests/temp/*
         - tests/MessageBus/Fixtures/*
 
