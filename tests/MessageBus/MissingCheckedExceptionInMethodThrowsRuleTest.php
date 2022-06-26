@@ -25,11 +25,11 @@ class MissingCheckedExceptionInMethodThrowsRuleTest extends DynamicExtensionsRul
             [__DIR__ . '/Fixtures/TestService.php'],
             [
                 [
-                    "Method NepadaTests\PHPStan\MessageBus\Fixtures\TestService::handleOrderCommand() throws checked exception NepadaTests\PHPStan\MessageBus\Fixtures\FailedToPlaceOrderException but it's missing from the PHPDoc @throws tag.",
+                    "Method NepadaTests\PHPStan\MessageBus\Fixtures\TestService::handleOrderCommand() throws checked exception NepadaTests\PHPStan\MessageBus\Fixtures\FailedToRejectOrderException but it's missing from the PHPDoc @throws tag.",
                     49,
                 ],
                 [
-                    "Method NepadaTests\PHPStan\MessageBus\Fixtures\TestService::handleOrderCommand() throws checked exception NepadaTests\PHPStan\MessageBus\Fixtures\FailedToRejectOrderException but it's missing from the PHPDoc @throws tag.",
+                    "Method NepadaTests\PHPStan\MessageBus\Fixtures\TestService::handleOrderCommand() throws checked exception NepadaTests\PHPStan\MessageBus\Fixtures\FailedToPlaceOrderException but it's missing from the PHPDoc @throws tag.",
                     49,
                 ],
             ],
