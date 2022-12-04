@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace NepadaTests\PHPStan\MessageBus;
 
+use PHPStan\Analyser\Error;
 use PHPStan\Rules\Exceptions\MissingCheckedExceptionInMethodThrowsRule;
 use PHPStan\Rules\Rule;
 
@@ -34,6 +35,21 @@ class MissingCheckedExceptionInMethodThrowsRuleTest extends DynamicExtensionsRul
                 ],
             ],
         );
+    }
+
+    /**
+     * @param string[] $files
+     * @return list<Error>
+     */
+    public function gatherAnalyserErrors(array $files): array
+    {
+        // Workaround for unstable order of found errors
+        $errors = parent::gatherAnalyserErrors($files);
+        usort(
+            $errors,
+            fn (Error $a, Error $b): int => $a->getMessage() <=> $b->getMessage(),
+        );
+        return $errors;
     }
 
 }
