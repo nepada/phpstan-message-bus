@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace NepadaTests\PHPStan\MessageBus;
 
 use PHPStan\Rules\Exceptions\CatchWithUnthrownExceptionRule;
+use PHPStan\Rules\Exceptions\DefaultExceptionTypeResolver;
 use PHPStan\Rules\Rule;
 
 /**
@@ -14,7 +15,16 @@ class CatchWithUnthrownExceptionRuleTest extends DynamicExtensionsRuleTestCase
 
     protected function getRule(): Rule
     {
-        return new CatchWithUnthrownExceptionRule();
+        return new CatchWithUnthrownExceptionRule(
+            new DefaultExceptionTypeResolver(
+                $this->createReflectionProvider(),
+                [],
+                [],
+                [],
+                [],
+            ),
+            true
+        );
     }
 
     public function testRule(): void
