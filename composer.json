@@ -18,7 +18,7 @@
         "php": ">=7.4.0 <8.4",
         "nepada/message-bus": "^2.0@dev",
         "nette/robot-loader": "^3.3.1@dev || ~3.2.4@dev || ~3.1.2@dev || ^4.0@dev",
-        "phpstan/phpstan": "^1.8.11"
+        "phpstan/phpstan": "^1.10.51"
     },
     "conflict": {
         "nette/finder": "<2.5.1"
