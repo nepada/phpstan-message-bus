@@ -9,7 +9,6 @@ final class RejectOrderHandler implements CommandHandler
 {
 
     /**
-     * @param RejectOrderCommand $command
      * @throws FailedToRejectOrderException
      */
     public function __invoke(RejectOrderCommand $command): void

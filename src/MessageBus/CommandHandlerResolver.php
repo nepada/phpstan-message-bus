@@ -27,7 +27,6 @@ class CommandHandlerResolver
 
     /**
      * @param string[] $scanDirectories
-     * @param MessageTypeExtractor $messageTypeExtractor
      */
     public function __construct(array $scanDirectories, MessageTypeExtractor $messageTypeExtractor)
     {
@@ -36,7 +35,6 @@ class CommandHandlerResolver
     }
 
     /**
-     * @param string $handledCommandType
      * @return string[]
      */
     public function getHandlerClasses(string $handledCommandType): array
