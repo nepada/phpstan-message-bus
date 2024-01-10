@@ -10,7 +10,6 @@ final class DummyCommandBus implements CommandBus
 {
 
     /**
-     * @param Command $command
      * @throws NotImplementedException
      */
     public function handle(Command $command): void

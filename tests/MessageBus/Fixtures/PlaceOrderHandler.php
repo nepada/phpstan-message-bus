@@ -9,7 +9,6 @@ final class PlaceOrderHandler implements CommandHandler
 {
 
     /**
-     * @param PlaceOrderCommand $command
      * @throws FailedToPlaceOrderException
      */
     public function __invoke(PlaceOrderCommand $command): void
