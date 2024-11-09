@@ -15,9 +15,7 @@ class MissingCheckedExceptionInMethodThrowsRuleTest extends DynamicExtensionsRul
 
     protected function getRule(): Rule
     {
-        /** @var MissingCheckedExceptionInMethodThrowsRule $rule */
-        $rule = self::getContainer()->getByType(MissingCheckedExceptionInMethodThrowsRule::class);
-        return $rule;
+        return self::getContainer()->getByType(MissingCheckedExceptionInMethodThrowsRule::class);
     }
 
     public function testRule(): void
