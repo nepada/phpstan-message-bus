@@ -12,7 +12,6 @@ use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\DynamicMethodThrowTypeExtension;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
-use PHPStan\Type\VoidType;
 
 class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTypeExtension
 {
@@ -44,16 +43,19 @@ class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTyp
         $throwTypes = [];
 
         $commandBusThrowType = $methodReflection->getThrowType();
-        if ($commandBusThrowType !== null && ! $commandBusThrowType instanceof VoidType) {
+        if ($commandBusThrowType !== null && ! $commandBusThrowType->isVoid()->yes()) {
             $throwTypes[] = $commandBusThrowType;
         }
 
-        $commandType = $this->commandTypeExtractor->extractCommandType($methodCall, $scope);
-        if ($commandType !== null && $commandType !== Command::class) {
-            $throwTypes = array_merge(
-                $throwTypes,
-                $this->getHandlerThrowTypes($commandType, $scope),
-            );
+        $commandTypes = $this->commandTypeExtractor->extractCommandType($methodCall, $scope);
+        foreach ($commandTypes as $commandType) {
+            if ($commandType === Command::class) {
+                continue;
+            }
+            $throwTypes = [
+                ...$throwTypes,
+                ...$this->getHandlerThrowTypes($commandType, $scope),
+            ];
         }
 
         if (count($throwTypes) === 0) {
@@ -79,7 +81,7 @@ class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTyp
                 continue;
             }
             $handlerThrowType = $handlerReflection->getMethod('__invoke', $scope)->getThrowType();
-            if ($handlerThrowType === null || $handlerThrowType instanceof VoidType) {
+            if ($handlerThrowType === null || $handlerThrowType->isVoid()->yes()) {
                 continue;
             }
             $throwTypes[] = $handlerThrowType;
