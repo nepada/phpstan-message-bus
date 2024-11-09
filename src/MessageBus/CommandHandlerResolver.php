@@ -14,19 +14,19 @@ class CommandHandlerResolver
 {
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     private array $scanDirectories;
 
     /**
-     * @var string[]|null
+     * @var array<class-string<CommandHandler>, class-string>|null
      */
     private ?array $commandTypeByHandlerType = null;
 
     private MessageTypeExtractor $messageTypeExtractor;
 
     /**
-     * @param string[] $scanDirectories
+     * @param array<string> $scanDirectories
      */
     public function __construct(array $scanDirectories, MessageTypeExtractor $messageTypeExtractor)
     {
@@ -35,7 +35,7 @@ class CommandHandlerResolver
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     public function getHandlerClasses(string $handledCommandType): array
     {
@@ -50,7 +50,7 @@ class CommandHandlerResolver
     }
 
     /**
-     * @return string[]
+     * @return array<class-string<CommandHandler>, class-string>
      */
     private function getCommandTypeByHandlerType(): array
     {
@@ -83,7 +83,7 @@ class CommandHandlerResolver
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     private function getAllClasses(): array
     {

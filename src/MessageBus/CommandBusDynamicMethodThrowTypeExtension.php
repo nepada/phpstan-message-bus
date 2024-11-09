@@ -64,7 +64,7 @@ class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTyp
     }
 
     /**
-     * @return Type[]
+     * @return list<Type>
      */
     private function getHandlerThrowTypes(string $commandType, Scope $scope): array
     {
