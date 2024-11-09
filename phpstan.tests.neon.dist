@@ -35,3 +35,5 @@ parameters:
     ignoreErrors:
         -
             identifier: phpstanApi.constructor
+        -
+            identifier: phpstanApi.classConstant
