@@ -4,7 +4,7 @@ declare(strict_types = 1);
 use Composer\InstalledVersions;
 use Composer\Semver\VersionParser;
 
-$config = [];
+$config = ['parameters' => ['ignoreErrors' => []]];
 
 if (InstalledVersions::satisfies(new VersionParser(), 'phpstan/phpstan', '<1.10.36')) {
     $config['parameters']['ignoreErrors'][] = [

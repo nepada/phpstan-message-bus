@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 use PhpParser\Node\VariadicPlaceholder;
 
-$config = [];
+$config = ['parameters' => ['ignoreErrors' => []]];
 
 if (! class_exists(VariadicPlaceholder::class)) {
      // VariadicPlaceholder supported since nikic/php-parser 4.13
