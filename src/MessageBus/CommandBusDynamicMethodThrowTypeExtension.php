@@ -31,7 +31,7 @@ class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTyp
 
     public function isMethodSupported(MethodReflection $methodReflection): bool
     {
-        if (! is_a($methodReflection->getDeclaringClass()->getName(), CommandBus::class, true)) {
+        if (! $methodReflection->getDeclaringClass()->is(CommandBus::class)) {
             return false;
         }
 
