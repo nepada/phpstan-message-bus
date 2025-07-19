@@ -27,6 +27,7 @@ parameters:
             tooWideThrowType: true
         uncheckedExceptionClasses:
             - LogicException
+            - PHPStan\DependencyInjection\MissingServiceException
 
     excludePaths:
         - tests/temp/*
