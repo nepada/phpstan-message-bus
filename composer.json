@@ -26,8 +26,8 @@
     "require-dev": {
         "phpunit/phpunit": "^8.5.21 || ^9.5.10",
         "phpstan/phpstan-strict-rules": "2.0.10",
-        "spaze/phpstan-disallowed-calls": "4.9.2",
-        "shipmonk/phpstan-rules": "4.3.6",
+        "spaze/phpstan-disallowed-calls": "4.12.0",
+        "shipmonk/phpstan-rules": "4.3.7",
         "phpstan/phpstan-phpunit": "2.0.16",
         "php-parallel-lint/php-parallel-lint": "1.4.0",
         "nepada/coding-standard": "8.0.1",
