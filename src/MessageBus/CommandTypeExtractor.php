@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace Nepada\PHPStan\MessageBus;
 
+use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
-use PhpParser\Node\VariadicPlaceholder;
 use PHPStan\Analyser\Scope;
 
 class CommandTypeExtractor
@@ -20,7 +20,7 @@ class CommandTypeExtractor
         }
 
         $commandArgument = $methodCall->args[0];
-        if ($commandArgument instanceof VariadicPlaceholder) {
+        if (! $commandArgument instanceof Arg) {
             return [];
         }
 
