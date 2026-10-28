@@ -22,7 +22,11 @@ class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTyp
 
     private ReflectionProvider $reflectionProvider;
 
-    public function __construct(CommandTypeExtractor $commandTypeExtractor, CommandHandlerResolver $commandHandlerResolver, ReflectionProvider $reflectionProvider)
+    public function __construct(
+        CommandTypeExtractor $commandTypeExtractor,
+        CommandHandlerResolver $commandHandlerResolver,
+        ReflectionProvider $reflectionProvider
+    )
     {
         $this->commandTypeExtractor = $commandTypeExtractor;
         $this->commandHandlerResolver = $commandHandlerResolver;
@@ -38,7 +42,11 @@ class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTyp
         return $methodReflection->getName() === 'handle';
     }
 
-    public function getThrowTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
+    public function getThrowTypeFromMethodCall(
+        MethodReflection $methodReflection,
+        MethodCall $methodCall,
+        Scope $scope
+    ): ?Type
     {
         $throwTypes = [];
 
@@ -68,7 +76,10 @@ class CommandBusDynamicMethodThrowTypeExtension implements DynamicMethodThrowTyp
     /**
      * @return list<Type>
      */
-    private function getHandlerThrowTypes(string $commandType, Scope $scope): array
+    private function getHandlerThrowTypes(
+        string $commandType,
+        Scope $scope
+    ): array
     {
         $throwTypes = [];
 

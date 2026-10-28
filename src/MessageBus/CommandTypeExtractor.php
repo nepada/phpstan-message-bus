@@ -13,7 +13,10 @@ class CommandTypeExtractor
     /**
      * @return list<string>
      */
-    public function extractCommandType(MethodCall $methodCall, Scope $scope): array
+    public function extractCommandType(
+        MethodCall $methodCall,
+        Scope $scope
+    ): array
     {
         if (count($methodCall->args) === 0) {
             return [];

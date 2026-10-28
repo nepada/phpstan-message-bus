@@ -34,11 +34,11 @@ class CatchWithUnthrownExceptionRuleTest extends DynamicExtensionsRuleTestCase
             [
                 [
                     'Dead catch - NepadaTests\PHPStan\MessageBus\Fixtures\NotImplementedException is never thrown in the try block.',
-                    28,
+                    31,
                 ],
                 [
                     'Dead catch - Throwable is never thrown in the try block.',
-                    42,
+                    45,
                 ],
             ],
         );

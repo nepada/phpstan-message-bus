@@ -28,7 +28,10 @@ class CommandHandlerResolver
     /**
      * @param array<string> $scanDirectories
      */
-    public function __construct(array $scanDirectories, MessageTypeExtractor $messageTypeExtractor)
+    public function __construct(
+        array $scanDirectories,
+        MessageTypeExtractor $messageTypeExtractor
+    )
     {
         $this->scanDirectories = $scanDirectories;
         $this->messageTypeExtractor = $messageTypeExtractor;

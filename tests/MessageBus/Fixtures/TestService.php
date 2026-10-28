@@ -12,7 +12,10 @@ final class TestService
 
     private DummyCommandBus $dummyCommandBus;
 
-    public function __construct(CommandBus $commandBus, DummyCommandBus $dummyCommandBus)
+    public function __construct(
+        CommandBus $commandBus,
+        DummyCommandBus $dummyCommandBus
+    )
     {
         $this->commandBus = $commandBus;
         $this->dummyCommandBus = $dummyCommandBus;
